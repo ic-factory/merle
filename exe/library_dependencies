@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+# Trap ^C
+Signal.trap("INT") {
+  puts "\nCtrl-C detected. Exiting..."
+  sleep 1
+  exit
+}
+
+$:.unshift(File.expand_path("../../lib", __FILE__))
+#require "merle"
+require "merle/vhdl_reader"
+require "merle/analyzer"
+require "merle/string"
+
+library_name = ARGV[0]
+project_root = ARGV[1]
+filename = ARGV[2]
+Merle::Analyzer.load(library_name, project_root, filename).library_dependencies
